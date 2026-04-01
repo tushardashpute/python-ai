@@ -1,0 +1,27 @@
+AI knowledge assistant  - v1 - CLI 
+v1_basic_cli.py
+api call structure - i am going to share.
+
+you must:
+a. Ask user for a concept
+b. send it to the API 
+c. return a structured explanation of that concept
+d. compare outputs at diff temps
+
+eg USer inputs what is k8s 
+your ai assitant shud return structured explanation.
+
+Next
+modify prompt to  
+- add constraints (max 100 words)
+- add format(bullets)
+
+Add - this is for next class
+ - better prompt strucutre - 
+ json output. 
+
+
+challenge mode:
+change the system message
+change the temp from 0.2 - 0.8
+compare token usage in all the cases 

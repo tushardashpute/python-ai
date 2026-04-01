@@ -1,0 +1,222 @@
+Level 1 - Prompt Systems 
+User input  --> Prompt --> LLM  ---> Response 
+
+Already built in class 1 and took one step forward using API 
+
+this is the simplest architecture
+
+eg 
+user says "summarize this report"
+Prompt is sumarize the following text in 3 bullet points.
+
+Output:
+Summary of the report
+
+
+This is what most peopl think AI is 
+
+LLM's: 
+There are limitations:
+a. hallucination
+b. forget context 
+c. cant access private data
+d. dont run code.
+
+Level 2 - RAG ( Retrieval Sytem)
+When AI needs knowledge it does not already have, we "retrieve" relevant info and give it to the context.
+
+egs:
+company docs
+pdf 
+policies 
+research papers 
+
+LEvel 3 - Tool Systems (Agents)
+
+When AI needs to do something, not just answer something, it needs tools. 
+
+egs:
+analysze csv 
+call API 
+run python 
+query DB 
+
+IF AI needs knowledge -> Retrieval
+IF AI needs action -> Tools
+
+Level - Workflows
+
+when multiple steps combine into a "SYSTEM" we call that a workflow. 
+
+ex: 
+ - upload document
+ - process it 
+ - retrive context 
+ - generate answer 
+ - store output 
+
+A workflow is not one model call. It is a designed sequence. 
+
+
+
+AI is not one thing, but a "stack" of architectures 
+
+
+Prompt Engineering
+
+most people think prompt is a question. 
+Wrong. 
+
+it is the full context given to the model.
+which includes:
+system message, 
+user message,
+conversation history, 
+retrieved docs,
+formating instructions,
+
+Goto prompt_validation.py 
+
+        "role": "system", "content": "You are a precise AI learner/instructor/ architect"
+        "role": "user", "content": "Explain Hallucination in one sentence in AI context."
+
+the model predicts tokens based on the entire context - not just our question. that is why ou see so less tokens.
+
+system - controls behavior of the model 
+user - task request to the model. 
+
+without system - > inconsistent
+with system -> controlled 
+
+system role -> controls behavior 
+user role -> the actual request (prompt)
+Assistant role -> models previous response. 
+
+"this is how we simulate chat history"
+
+AI calls external tools (advanced usage)
+{{role }: "tool" content :"Result from a function" }
+
+the model asks for a tool -> tools runs -> result comes back as a message"
+
+this is how AI AGents work in production. 
+
+Roles are just labels.
+They tell the model how to interpret each peice of text.
+
+AI doesnt seee a simple question now, but it sees a "structured" conversation with roles. 
+
+Why Structured Prompts work better. 
+
+Bad --> Better --> professional 
+
+Bad
+Tell me about hallucination
+
+Too vague 
+Better prompt 
+
+Explain hallucination in 1 sentence using simple english language. 
+Add more constraints.
+
+prof promot would look like 
+
+Explain hallucination in exactly one sentence for a software engineer.
+Focuses on probablistic text generation. 
+
+LLMs perfirm best when instructions are "specific" and strucutred 
+
+API controls:
+a. temperature  - controls randomness
+0.0 -> deterministic
+0.8 -> Creative
+1.0 -> very creative 
+
+b. max_tokens - its bascically your max budget . limits your ouput 
+
+c. top_p 
+controls the probablity sampling. 
+
+These are control levers, not just parameters.
+
+
+top_p 
+increases the most likely words vs most probablistic words 
+
+AI is very .....
+powerful -> 40% 
+useful -> 30%
+important -> 20%
+wierd -> 5%
+dumb -> 1%
+
+if my top_p = 1.0 
+model can pick anythihng from the above list.even "dumb" the one with 1% of even if 0.1% is there it can pick it up.
+top_p=0.7 
+now we only top words until cumilative = 70% 
+powerful -> 40% 
+useful -> 30%
+
+Stop after (40+30%)
+
+in practice we usually use or tune one of them - temperature or top_p and NOT both aggressively 
+temperature - how the random choice is 
+top_p - how many choices to chose from.
+
+top_p is the preferred choice because it avoids extremely unlikely tokens. 
+
+Core Concept.
+LLMs are stateless - but conversations feel stateful. 
+
+
+Ste p 1-?>
+stateless 
+The model does NOT remember anything between calls, which simply means that every API call is independent. 
+
+call 1
+user: My name is Ankit
+call 2
+user: What is my name?
+
+The model does not know. as we didnt send history
+
+Step 2-> what sometimes makes it feel stateful?
+Internally they send the entire conversation every time - they have to remember. 
+The times you feel it has not remembered or forgotten could be due to many factors, including context window. 
+
+how it would look like Internally
+
+role : "user" "content": "My name is Ankit"
+role:"assitant","content": Nice to meet you, Ankit"
+role: user, "content": What is my name?
+
+the model is stateless
+
+But the System - creates "state" by replaying history .
+so how is the state acutally created?
+state = you resend the context every time.
+no hidden memory 
+no magic 
+just conext accumulation.
+
+
+users are response for:
+storing history
+sending history
+managing context 
+
+But this leads toa  bigger or hidden problem - ?
+The hidden problem
+Token explosion
+
+something like
+messages = [
+    ....100 prev messgaes.....
+]
+
+more history -> more tokens  -> more cost - more latency - too much context -> attention fragmentation. 
+
+it struggles to "focus" on what matters the most from that history(context)
+
+so we cannot send everything.
+

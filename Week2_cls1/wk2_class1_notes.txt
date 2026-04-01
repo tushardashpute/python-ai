@@ -1,0 +1,46 @@
+Week 1 = Understanding 
+Week 2  = focus wud move to BUILDING
+
+Controlling it.
+
+user -> API -> Model -> Response
+
+map it to engineering systems
+
+input -> Tokenization -> Prediction -> Output -> Post-processing. 
+
+so if the output is bad
+it is not the model's fault
+its our input.
+
+
+humans like text (aka strings)
+so machines like more strucutre than text.
+
+
+JSON is not just formatting - its a CONTRACT 
+    - we are defining:
+        a schema
+        a strucutre
+        clear expectations
+
+we tell model to only respond in json.
+
+now the structured output will look something like
+""" {
+  "definition": "Prompt engineering is the process of designing and refining input prompts to optimize the performance of AI models, particularly in natural language processing tasks. It involves crafting specific queries or instructions that guide the model to produce desired outputs.",
+  "cause": "The need for prompt engineering arises from the inherent variability in AI model responses based on how questions or tasks are framed. By carefully constructing prompts, users can improve the relevance, accuracy, and creativity of the model's outputs, making it a crucial skill for effective interaction with AI systems.",
+  "example": {
+    "basic_prompt": "Tell me about the benefits of exercise.",
+    "engineered_prompt": "List three specific benefits of regular exercise for mental health, and provide a brief explanation for each."
+  }
+} """
+
+we just made AI programmable.
+
+
+JSON generates a CONTRACT between your system and the model.
+
+sometimes model can still generate an invalid json, or extra text that we dont need.
+
+we always VALIDATE our output as well.

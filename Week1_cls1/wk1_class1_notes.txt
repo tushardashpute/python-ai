@@ -1,0 +1,149 @@
+LLM is a "probablistic next-token prediction engine" trained on massive texts based corpora using transformer architecture.
+
+A token is not a word 
+it is chunk of text. 
+
+eg: Artificial Intelligence 
+may become: 
+
+["Artifical", "Intelligence"]
+
+or  even:
+["Arti" , " fical", "Intell", "igence"]
+Models see numbers, not words.
+
+next-token prediction
+its like your "auto-complete" on phone.....but more powerful.
+
+input is: 
+The capital of France is 
+the model now assigns probablities:
+
+Paris   -> 0.91 
+London  -> 0.03
+Berlin  -> 0.02
+
+it selts highest prbobablity (or samples depending on temperature)
+
+There is no pre knowledge
+there is prbobablity distribution over choices.
+
+
+Transformer 
+
+Transformer = Attention mechanism + Parallel Processing. 
+
+attention mech finds which prev tokens matter most right now. 
+eg. 
+I went to the bank to deposit money 
+
+context weighting. 
+"Context is the king"
+
+
+Context window 
+
+every model has a maximum token limit.
+
+eg: 
+8k,32k,128k tokens.
+This is one of the places wehre diff LLM's are fighting.
+
+what happens if exceeded:
+older toeksn drop
+
+Longer prompst increase cost
+Longer promopts increase memory pressure 
+long prompts affect performance .
+
+This matters heavly in production env. 
+
+1 token approx .75 words 
+RAG (Retrieval Augmented Generation )
+
+
+Hallucination
+
+why happens:
+- Model predicts statistically likely continuation 
+- it doesnt verify truth or facts
+- it doesnt access real-time facts unless given.
+
+it optimizes for :
+likelihood , not correctness. 
+
+Hallucination is not a bug. its a design consequence. 
+
+Model vs system 
+Model 
+    GPT 
+    Claude
+    Gemini 
+
+System
+    - input(prompt)
+    - logic (your code)
+    - output handling 
+
+ChatGPT is a product of openai 
+GPT is a model 
+what we are building = " AI system"
+
+Companies dont build models, they build sytems using those models. 
+
+
+Model:
+Sateless predictive engine. 
+
+    Retrieval 
+    Memory
+    Guardrails 
+    Orchestration
+    API
+    UI 
+    logging 
+    Cost management. 
+
+
+gpt-4o-mini (very fast and affordable)
+
+Roughly: (validate this)
+    15c per 1 million input tokens
+
+for mac
+nano ~/.zshrc 
+export OPENAI_API_KEY = "Youkey"
+
+finally before running just give
+source ~/.zshrc
+
+
+Verify uing Python 
+
+Note - goto llm_learning.py 
+
+temperature
+
+temperature controls randomness 
+low temp (0.0-0.2)
+    Very deterministic 
+    Possibility of getting the Same answer every time we run it is higher. 
+    Predictable 
+    Professional 
+
+high temp (0.7-1.0)
+    More variation 
+    More Creative 
+    Less predictable 
+    Slightly more hallucination risk 
+
+Ramdon.choices - where we had weights 
+
+temperature= How "WILD" should the probablity of the sampling be?
+
+Hallucination occurs when the model predicts plausible but incorrect text.
+
+
+
+
+

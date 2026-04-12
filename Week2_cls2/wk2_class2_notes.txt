@@ -1,0 +1,171 @@
+Most people think prompt = question?
+Wrong!
+
+Prompt is a program written in natural language
+
+
+Bad prompt
+Explain AI 
+
+Good prompt 
+You are a senron AI engineer.
+explain AI to a software developer.
+
+constratins
+a. keep it under 100 words
+b. use simple language
+
+output format:
+- definition 
+- example 
+
+Better prompts = less guessing by the model 
+
+BUILD prompt system 
+
+
+one prompt = basic usage
+multiple prompts = we are getting towards building a prompt system 
+
+Steps:
+1. Give Definition
+2. Give example
+3. Keep it under 50 words
+
+user input
+↓
+[prompt 1]
+↓
+[prompt 2]
+↓
+[prompt 3]
+↓
+Final output 
+
+This no longer a prompt rahter a PIPELINE
+
+
+
+we just broke one AI task unto multiple "controlled" steps/levels
+
+we are not seeing 
+    a. decomposition
+    b. orchestration
+    c. control 
+
+Python is calling the AI 
+but Python is orchestrating intelligence here.
+
+without actually using RAG
+
+
+user input
+↓
+[prompt 1 : Definition]
+↓
+[prompt 2: Siplimify/advance]
+↓
+[prompt 3: Example]
+↓
+Final output 
+
+This is not a prompt but a basic promp pipeline. 
+
+Prompt refinement loop 
+
+
+
+
+We used AI to fix AI 
+
+
+Nancy - when to stop the refinement loop 
+agents - week 3/4 will come in more detail 
+- iterative inference.
+- self-critique loop 
+
+
+def refine_until_good(answer, iterations =2):
+    for range(iterations):
+    answer = better_improve_answer(answer)
+return answer
+
+
+Prompt Guardrails 
+
+We guide the model + put constraints to it 
+
+we are "enforcing behavior" hence the name guardrails 
+
+prompt with enforced behavior 
+
+without guardrails:
+    a. output varies - messy, long etc
+    b. tone changes
+    c. structure breaks 
+    d. hallucination increases - this is where people confuse it with temperature - int q 
+
+
+no guardrails - wide behavior space -> unpredictable 
+with guardrails - narrow behavior space -> more controlled output 
+
+impact on outputs
+
+without                 with
+messy                   structured
+long                    concise
+inconsistent            repeatable
+
+
+Types of Guardrails:
+a. Structural Guardrails
+Output:
+    - definition
+    - example 
+
+b. Length Guardrails 
+max 50 words
+
+c. Style Guardrails
+no jargon 
+beginner friendly 
+
+d. Behavioral Guardrails
+Do not hallucinate 
+If unsure, say "I do not know"
+
+
+we are reducing the freedom of the model  and at the same time increasing its reliability 
+
+Prompt(with guardrails)
+↓
+LLM output
+↓
+Refinement Loop
+↓
+Final output 
+
+Prompt debugging - starting from basic prompt to debug your way like u wud do in a code refinement process.
+
+vs 
+
+promot versioning 
+
+prompt_v1 = "Explain APIs"
+
+prompt_v2 = "Explain APIs in 1 sentence"
+
+prompt_v3 = """
+
+Explain APIs
+- definition
+- example
+"""
+
+Prompts also evolve liek a software and hence the versionining also applies to them.
+
+you guys shud bring control levers back 
+for eg
+prompt -> determines the direction of the output 
+temperature -> determine the variation of the output
+

@@ -1,7 +1,7 @@
 
 # Week 1 Class 2 - Structured AI Assistant
 
-import os
+import os, json
 from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -33,7 +33,7 @@ Output:
 response = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
-        {"role":"system","content":"You are a senior devops and Jenkins expert"},
+        {"role":"system","content":"You are a senior devops and Jenkins expert, Return the output strictly in JSON format"},
         {"role":"user","content":prompt}
     ],
     temperature=temp,

@@ -1,0 +1,263 @@
+Wk1 -> We understood AI
+wk2 -> We controlled AI 
+Wk3 -> We give AI "knowledge"
+
+even today - the mdoel that we are using is SAME as week 1
+WE are not upgrading the model  - thats for GPT or LLM companies
+
+we are upgrading our SYSTEM around it - today we are going to give it knowledge
+
+Structured != Correct
+Clean != True
+
+eg
+can the model or our suystem answer company - specific  questions?
+
+prompt = instruction 
+context = information 
+
+Rember context is the king
+
+And BOTH are required for real systems.
+
+Prompt Eng -> Context Engineering (RAG Foundations)
+
+
+memory + retrieval + grounded AI 
+
+we are shifitng the architecture - v vimp
+
+Prompt -> LLM -> output 
+to
+Data -> retrieval -> context -> LLM -> output 
+
+RAG (Retrieval Augmented Generation)
+
+First retrieve .....and then generate. 
+
+Question -> Retrieve knowledge -> Send this to the model -> Answer 
+
+The model is not "remembering" but "our system is feeding it memory"
+
+context eng = giving the model the "right" info at the "right" time. 
+
+prompt = """
+You are a helpful AI assitant.
+
+Explain our company refund policy.
+Constraints:
+- max 50 words
+- JSON format 
+
+"""
+
+print("=====week2======")
+print(run_prompt(prompt))
+
+
+
+so we do see
+    - Structured output
+    - Clean
+    - controlled
+
+But not correct, or completely made up!
+
+Better formating does NOT mean better truth or correctness. 
+
+"knowledge"
+
+Now we are entering into RAG 
+
+step 1:
+Retrieval -> Find the "relevant" information
+
+Step 2:
+Augmentation -> Inject it into prompt 
+
+Step 3:
+Generation -> Model produces the answer based on the above. 
+
+
+RAG Pipeline
+USer Q -> Retrieve Data -> Inject Context -> LLM -> Answer 
+
+v imp to note
+
+RAG is NOT a model feature. 
+RAG is a SYSTEM DESIGN
+
+RAG is not something that OPENAI provides
+RAG is something WE BUILD 
+
+
+lets create a RAG in multiple steps: 
+GOTO # RAG Steps:
+
+
+======with some context======
+The refund policy allows for refunds within 30 days as long as a receipt is provided.
+
+so we get grounded ANSWER becoz of RAG 
+
+
+so with simple_search
+we now have multiple answers insteaf of one 
+this is called top-k retrieval 
+
+in real AI system , we cannot rely on just one peice of data (retrieval and/or an exact match)
+it needs to match against multiple data sources. 
+
+1 question -> multiple possible matches -> select top results 
+
+In real systems this is called TOP-K retrieval - v v vimp for interviews 
+we dont just take one result but we take the best "few" results. 
+
+
+what we did is keyword search and in real systems its like semantic search 
+
+#Nancy's quesiton - excellent
+why not use PDF directly
+Real -world flow 
+
+1. take the pdf or document 
+2. extract the text
+3. split it into smaller chunks
+4. create embeddings out of these chunks 
+5. Store these embedings in a vector DB 
+6. when a user now asks a q, embed the question as well 
+7. find the closest chunks by semantic similarity
+8. send those chunks to the LLM 
+9. LLM answers using that retrieved knowledge
+
+PDF -> text -> chunks -> embeddings -> retrieval -> LLM -> output 
+
+this is your actual RAG pipeline in production .
+
+
+
+keyword search vs meaning search 
+
+our system uses keywords
+
+but in real-time they want to use meaning.
+keyword -> exact match
+semantic -> similar meaning. 
+
+chunking is the solution for it. 
+
+
+docs
+refund policy
+shippping policy
+damage policy 
+return process
+
+as part of chunking
+Chunk 1 -> refund 
+Chunk 2 -> Shipping 
+Chunk 3 -> damage
+Chunk 4 -> Returns 
+
+
+we replace this with embeddings 
+
+RAG does not prevent hallucination. it can still happen.
+
+RAG doesnt guarantee the truth or correctness of the output
+it guarantees the consistency with retrieved data.
+
+
+so here is the user question
+print(rag_system("Tell me about refunds and damaged items")) 
+
+
+internally how it works, top-k retrieval
+
+Step 1 - Search across documents (chunks)
+eg
+Doc 1: Refunds .....
+Doc 2: Shipping .....
+Doc 3: Damaged .....
+
+Step 2 - Score Relevance 
+Refund -> relevant
+Damaged -> relevant
+Shipping  -> not relevant.
+CEO - > not relevant 
+returns - > relevant
+
+Step 3- Top-k retrieval happens 
+eg k=2 
+Top 2
+[Refund Policy]
+[Damage Policy]
+
+
+step 4
+Combine into one context 
+Context now becomes:
+    "Refunds are allowed within 30 days",
+    "Damaged items can be replaced",
+
+Step 5 - now send this to LLM
+LLM now answers using BOTH peices of info. 
+
+[user Question] -> Search across Chunks -> Rank by relevance -> [top-k selected =2 in our case] (k is usually 3-5 in real systems) -> LLM --> Answer/Output.
+
+
+choosing top-k is a trade-off too:
+Too small -> can miss info
+too large -> add noise and more tokens 
+
+
+top-k => how much context you allow into the model to process. 
+
+Case k=1 - too small, only refunds doc/chunk will be fed so LLM will miss the damaged item value
+it can look like its hallucinating.
+
+k=2 it was good
+
+k=3 or k=4 (too large)
+REfund + damage + shipping + discounts + CEO etc 
+Problem:
+    - noise
+    - confusion 
+    - higher cost (tokens)
+
+small K             Large K 
+Fast                Expensive 
+Focused             Noisy 
+Migh miss info      might confuse the model - increate cost 
+
+k is not a random choice - its a trade-off that the engineer makes wrt their system
+
+
+this is something to remmeber when designing the system 
+chunk size - K
+small chunks  ---> need higher K 
+large chunks  ---> smaller k  
+
+Complexity
+
+Query complexity 
+Simpe -> k 2-3 
+complex question -> k =5-8 
+
+Model context window 
+GPT-4o-mini -> limited tokens 
+bigger model -> can handle more or can handle larger k 
+
+always make k as configurable 
+
+
+in production 
+
+k=10+ -> rarely seen 
+most common are 3-5
+
+5 is considered safe default. 
+
+
+
+

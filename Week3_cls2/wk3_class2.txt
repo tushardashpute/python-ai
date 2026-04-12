@@ -1,0 +1,110 @@
+What is embedding?
+
+meaning
+not words BUT meaning. 
+
+AI reads text. but in reality AI actually reads numbers. this is the key 
+
+
+Embedding = converting text into numbers  (that machines can understand)
+An embedding is a way to turn a peice of text into a list of numbers (a vector) that represents its meaning. 
+
+refund  - .345
+return  - .432
+
+Imagine a space 
+
+refund  .
+return  .
+policy  .
+
+These are the points and are close to each other.
+
+Books about Dogs
+Books about puppies
+books about spaceships
+
+In vector space "refund" and "return" and "money back" are mathematically close to each other, just like our dogs and puppies are in the same aisle diff shelf in the library, even if they dont share the same text.
+
+How IT works
+pipepline
+
+Text -> Embedding -> Vector 
+
+Retrievela process will also change :
+Query -> Embedding -> Compare within document embeddings ->  Find closeset vectors -> Top-k Selection 
+
+
+Similarity 
+how do we compare meaning?
+A: Distance between the vectors 
+
+closer vectors - > similar meaning
+the farther the vectors -> diff meaning
+
+
+
+Similarity Score: 0.3786070419135282
+higher score - more similar meaning. 
+
+cosine similarity range is -1 to 1 - pure math. 
+
+but for text embeddings  or in practice, we mostly compare scores relative to each other . 
+
+Build semantic retrieval 
+
+[('Digital products are not refundable', np.float64(0.46964039749569403)), ('Refunds are allowed within 30 days', np.float64(0.450337059690279))]
+Yes, you can return an item after 2 weeks as long as it is not a digital product, since refunds are allowed within 30 days.
+
+Now the system understands meaning and not just keywords.
+
+What changed finally
+retrieval intelligence.
+
+
+Vector DB 
+Storing embeddings in the list will not scale. 
+we need:
+ - fast search
+ - efficient storage 
+ - similarity indexing
+
+ Vector DB = system to store and search embedddings efficiently .
+ egs: Pinecone, Weaviate, FAISS, Chroma 
+
+Vector DB is NOT AI 
+its a infrastrucutre for the use of AI 
+
+what vector DB store - just a overview:
+- chunkings of the document 
+- embed each chunking (turn into a vector)
+- store the vector + the text in the Vector DB 
+
+
+Full Prod system will look like 
+
+USer Question  -> Embeddings -> Vectod DB search -> top-k context -> context prompt -> LLM -> JSON output -> Validation  (week 1 or week 2)
+
+Not the text search.
+SIMILARITY Search 
+
+
+lets code.
+
+Read the pdf -> chunks -> embeddings -> semantic search
+
+wk3_cls2_rag.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+

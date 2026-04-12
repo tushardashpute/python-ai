@@ -468,6 +468,163 @@ This combination (Week 2 pipelines + Week 3 RAG) = Production systems!
 
 ---
 
+## 🎯 Interview Questions & Answers
+
+### **Beginner Level Questions**
+
+**Q1: What's the difference between a prompt and a pipeline?**  
+**A:** A prompt is a single interaction with an LLM. A pipeline chains multiple prompts together, where each step's output becomes input for the next step. Pipelines break complex tasks into simpler, more manageable parts.
+
+**Q2: Why would you use multiple AI calls instead of one?**  
+**A:** Decomposition allows better control, easier debugging, and more predictable results. Each call can focus on one specific aspect, making the overall system more reliable and allowing for validation at each step.
+
+**Q3: What is a refinement loop?**  
+**A:** A refinement loop iteratively improves AI outputs. It generates a response, evaluates its quality, and if below threshold, asks the AI to improve it. This continues until the output meets quality standards or reaches max iterations.
+
+### **Intermediate Level Questions**
+
+**Q4: How do you decide when to stop a refinement loop?**  
+**A:** Use multiple criteria: quality threshold (e.g., score > 0.8), maximum iterations (prevent infinite loops), diminishing returns (stop if improvement is minimal), time limits, or cost thresholds. Always have stopping conditions.
+
+**Q5: What are some patterns for chaining AI calls?**  
+**A:** Sequential (step1 → step2 → step3), conditional (evaluate and branch), parallel (multiple paths), and feedback loops (refinement). Choose based on whether steps depend on each other or can run independently.
+
+**Q6: How do you handle errors in AI pipelines?**  
+**A:** Implement try-catch blocks, validate outputs at each step, have fallback strategies, log failures for analysis, and design graceful degradation. Never let one failed step crash the entire pipeline.
+
+### **Advanced Level Questions**
+
+**Q7: How would you design a production-ready AI pipeline?**  
+**A:** Include error handling, logging, monitoring, validation at each step, fallback mechanisms, rate limiting, cost tracking, and human-in-the-loop for critical decisions. Make it observable and maintainable.
+
+**Q8: What's the relationship between pipeline complexity and reliability?**  
+**A:** More complex pipelines can be more capable but less reliable due to more failure points. Balance by keeping steps simple, adding robust error handling, and thorough testing. Sometimes simpler pipelines are more production-ready.
+
+---
+
+## 🔬 Additional Theory & Real-Time Examples
+
+### **Theory: Pipeline Orchestration Patterns**
+
+**Pattern 1: Sequential Processing**
+```
+Input → Step 1 (Extract) → Step 2 (Analyze) → Step 3 (Format) → Output
+```
+**Use when:** Steps depend on previous results, need linear flow.
+
+**Pattern 2: Parallel Processing**
+```
+Input → Step 1a (Analyze) ──┐
+      → Step 1b (Summarize) ─┼─→ Merge → Output
+      → Step 1c (Critique) ──┘
+```
+**Use when:** Independent analyses can run simultaneously.
+
+**Pattern 3: Conditional Branching**
+```
+Input → Initial Analysis → Quality Check
+                              ├─ Good → Output
+                              └─ Poor → Refinement → Re-check
+```
+**Use when:** Quality control is critical.
+
+### **Real-Time Example: Content Creation Pipeline**
+
+**Complex Task:** "Create a blog post about AI ethics"
+
+**Decomposed Pipeline:**
+1. **Research Phase:** Gather key topics and viewpoints
+2. **Outline Phase:** Create structured outline
+3. **Draft Phase:** Write initial content
+4. **Review Phase:** Self-critique and identify gaps
+5. **Refinement Phase:** Improve based on review
+6. **Formatting Phase:** Structure for publication
+
+**Each step has specific prompts and validation!**
+
+### **Theory: Cost Optimization in Pipelines**
+
+**Strategies:**
+- **Early Exit:** Stop if quality is good enough
+- **Caching:** Reuse results for similar inputs
+- **Parallelization:** Run independent steps simultaneously
+- **Model Selection:** Use smaller models for simple steps
+- **Batch Processing:** Group similar requests
+
+**Real-time Example:** A 5-step pipeline costs $0.02. With early exit, average cost drops to $0.008 if 60% exit early.
+
+### **Real-Time Example: Error Recovery in Pipelines**
+
+**Scenario:** Step 2 fails in a 4-step pipeline
+
+**Bad Approach:** Fail entire pipeline
+**Good Approach:**
+```python
+def robust_pipeline(input):
+    try:
+        step1_result = step1(input)
+        step2_result = step2(step1_result)
+        step3_result = step3(step2_result)
+        return step4(step3_result)
+    except Step2Error:
+        # Fallback: Skip step 2 or use alternative
+        return alternative_path(step1_result)
+    except Exception as e:
+        # Log and escalate
+        log_error(e)
+        return human_fallback(input)
+```
+
+**Production Lesson:** Design for failure, not perfection.
+
+### **Theory: Quality Metrics for Pipeline Outputs**
+
+**Quantitative Metrics:**
+- **Consistency:** Same input produces similar outputs
+- **Completeness:** All required elements present
+- **Accuracy:** Factual correctness (when verifiable)
+- **Relevance:** Output matches input requirements
+
+**Qualitative Metrics:**
+- **Coherence:** Logical flow and connections
+- **Usefulness:** Practical value to end user
+- **Appropriateness:** Tone and style fit context
+
+**Real-time Example:** Score outputs 1-10 on each metric, set thresholds for acceptance.
+
+### **Real-Time Example: Multi-Model Pipelines**
+
+**Use Case:** Complex analysis requiring different strengths
+
+**Pipeline:**
+1. **GPT-4:** Initial research and analysis (creative)
+2. **Claude:** Ethical review and safety check (careful)
+3. **GPT-3.5:** Formatting and standardization (fast)
+4. **Validation:** Custom code checks consistency
+
+**Business Impact:** Leverages strengths of different models while controlling costs.
+
+### **Theory: Human-in-the-Loop Patterns**
+
+**Pattern 1: Approval Gate**
+```
+AI Pipeline → Human Review → Approve/Reject → Continue
+```
+
+**Pattern 2: Escalation**
+```
+AI Confidence < Threshold → Human Review → Improved Output
+```
+
+**Pattern 3: Collaborative**
+```
+AI Draft → Human Edit → AI Polish → Final Output
+```
+
+**Real-time Example:** For legal documents, always include human review. For product descriptions, allow AI-only if confidence > 90%.
+
+---
+
 ## 🎯 Success Criteria
 
 You're ready for Week 3 when you can:

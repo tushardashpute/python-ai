@@ -468,6 +468,181 @@ Tomorrow: **Embeddings** - the secret sauce that makes retrieval work!
 
 ---
 
+## 🎯 Interview Questions & Answers
+
+### **Beginner Level Questions**
+
+**Q1: What is RAG and why is it important?**  
+**A:** RAG (Retrieval-Augmented Generation) is a technique where AI first retrieves relevant information from a knowledge base, then uses that information to generate answers. It's important because it prevents hallucination by grounding AI responses in actual data, making outputs more accurate and trustworthy.
+
+**Q2: What's the difference between traditional AI and RAG?**  
+**A:** Traditional AI relies only on training data (which can be outdated). RAG combines retrieval of current information with generation, allowing AI to access up-to-date knowledge and cite sources. RAG is more accurate and explainable.
+
+**Q3: What are the three steps of RAG?**  
+**A:** Retrieval (find relevant documents), Augmentation (add retrieved info to prompt), Generation (AI creates response using the augmented prompt). This three-step process ensures responses are grounded in real knowledge.
+
+### **Intermediate Level Questions**
+
+**Q4: How do you decide what information to retrieve for RAG?**  
+**A:** Use semantic similarity between the user's query and your documents. Convert both to embeddings (vector representations), then find documents with highest similarity scores. This ensures you retrieve meaningful, not just keyword-matching, content.
+
+**Q5: What are the challenges of implementing RAG?**  
+**A:** Chunking documents appropriately, handling large datasets efficiently, ensuring retrieval quality, managing context window limits, and dealing with conflicting information. Also need good vector databases and embedding models.
+
+**Q6: How does RAG compare to fine-tuning for knowledge updates?**  
+**A:** Fine-tuning requires retraining the model (expensive, slow, requires expertise). RAG allows real-time knowledge updates by just updating the retrieval database. RAG is faster, cheaper, and more flexible for changing information.
+
+### **Advanced Level Questions**
+
+**Q7: How would you design a production RAG system?**  
+**A:** Include document ingestion pipeline, chunking strategy, embedding generation, vector database, retrieval logic, prompt engineering, response validation, monitoring/metrics, and fallback mechanisms. Consider scalability, cost optimization, and error handling.
+
+**Q8: What are the limitations of RAG and how do you address them?**  
+**A:** Retrieval might miss relevant info, retrieved context might not fit in context window, and AI can still hallucinate within retrieved content. Address by: improving retrieval quality, using better chunking, implementing validation, and having human oversight for critical cases.
+
+---
+
+## 🔬 Additional Theory & Real-Time Examples
+
+### **Theory: RAG vs Fine-tuning Decision Framework**
+
+**Choose Fine-tuning when:**
+- Domain-specific language patterns are needed
+- Consistent style across all responses
+- Performance is critical (no retrieval latency)
+- Knowledge is stable and won't change
+
+**Choose RAG when:**
+- Knowledge changes frequently
+- Need to cite sources
+- Cost and speed of updates matter
+- Knowledge base is large and diverse
+
+**Real-time Example:** A legal AI might use fine-tuning for legal language patterns + RAG for current case law.
+
+### **Theory: Chunking Strategies Deep Dive**
+
+**Strategy 1: Fixed-size Chunking**
+```
+Document: 2000 tokens
+Chunk size: 500 tokens
+Result: 4 chunks of ~500 tokens each
+Pros: Simple, predictable
+Cons: May split related information
+```
+
+**Strategy 2: Semantic Chunking**
+```
+Split on natural boundaries:
+- Paragraph breaks
+- Section headers
+- Topic changes
+Pros: Preserves meaning
+Cons: Variable sizes
+```
+
+**Strategy 3: Sliding Window**
+```
+Chunk 1: tokens 0-500
+Chunk 2: tokens 250-750 (overlap)
+Chunk 3: tokens 500-1000
+Pros: Better context preservation
+Cons: More storage, potential redundancy
+```
+
+**Real-time Example:** For code documentation, use semantic chunking on function boundaries. For legal documents, use sliding windows to preserve context.
+
+### **Real-Time Example: Multi-source RAG**
+
+**Scenario:** Customer support with multiple knowledge sources
+
+**Sources:**
+- Product manuals (technical specs)
+- FAQ database (common questions)
+- Support tickets (past resolutions)
+- Policy documents (rules and procedures)
+
+**Retrieval Strategy:**
+```python
+def retrieve_context(query):
+    # Search all sources
+    manual_results = search_manuals(query, top_k=2)
+    faq_results = search_faq(query, top_k=3)
+    ticket_results = search_tickets(query, top_k=1)
+    policy_results = search_policies(query, top_k=1)
+    
+    # Combine and rank by relevance
+    all_results = manual_results + faq_results + ticket_results + policy_results
+    return rank_by_similarity(query, all_results)[:5]
+```
+
+**Business Impact:** More comprehensive answers from diverse sources.
+
+### **Theory: RAG Evaluation Metrics**
+
+**Retrieval Metrics:**
+- **Precision:** % of retrieved documents that are relevant
+- **Recall:** % of relevant documents that were retrieved
+- **Mean Reciprocal Rank:** How high relevant docs rank
+
+**Generation Metrics:**
+- **Faithfulness:** Does answer match retrieved context?
+- **Relevance:** Does answer address the query?
+- **Groundedness:** Can claims be verified from sources?
+
+**Real-time Example:** A good RAG system should achieve >80% precision and faithfulness scores.
+
+### **Real-Time Example: RAG for Code Generation**
+
+**Use Case:** AI coding assistant
+
+**RAG Pipeline:**
+1. **Query:** "How to implement user authentication in React?"
+2. **Retrieve:** Similar code examples, best practices, documentation
+3. **Augment:** Include retrieved code patterns in prompt
+4. **Generate:** AI writes code using proven patterns
+
+**Prompt Example:**
+```
+Using these code examples as reference:
+[Retrieved authentication examples]
+
+Implement user authentication for a React app with:
+- Login/logout functionality
+- JWT token handling
+- Protected routes
+```
+
+**Result:** More reliable, pattern-following code generation.
+
+### **Theory: Cost Optimization in RAG**
+
+**Strategies:**
+- **Pre-compute embeddings:** Don't embed at query time
+- **Index optimization:** Use efficient vector databases
+- **Caching:** Cache frequent queries and results
+- **Chunk size:** Balance retrieval quality vs context limits
+- **Top-k tuning:** Retrieve only what's needed
+
+**Real-time Example:** A RAG system processing 1000 queries/day can reduce costs by 60% through smart caching and optimal chunking.
+
+### **Real-Time Example: Handling Conflicting Information**
+
+**Problem:** Retrieved documents contradict each other
+
+**Solutions:**
+1. **Citation requirement:** Force AI to cite specific sources
+2. **Confidence scoring:** Include uncertainty indicators
+3. **Human escalation:** Flag conflicts for review
+4. **Source ranking:** Prefer authoritative sources
+
+**Example Response:**
+```
+Based on our product manual (source: PM-2024-v2, page 15), returns are accepted within 30 days. However, the FAQ (source: FAQ-2023) mentions 45 days. I'll escalate this discrepancy for clarification.
+```
+
+---
+
 ## 🔮 Tomorrow: Embeddings
 
 The ONE thing that makes RAG possible:

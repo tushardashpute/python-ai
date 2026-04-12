@@ -328,6 +328,124 @@ Level 4: "AI Architect"          → Design full systems
 
 ---
 
+## 🎯 Interview Questions & Answers
+
+### **Beginner Level Questions**
+
+**Q1: What's the difference between a prompt and a question?**  
+**A:** A question is just asking for information ("What is AI?"). A prompt is a complete program written in natural language that includes context, instructions, constraints, and output format. Prompts guide the AI's behavior and structure its response.
+
+**Q2: What are the four levels of AI systems?**  
+**A:** Level 1: Prompt Systems (stateless, simple prompts), Level 2: RAG Systems (with knowledge retrieval), Level 3: Tool Systems (can use external tools), Level 4: Workflows (complex multi-step processes). Most people only know Level 1.
+
+**Q3: What is a system message in a prompt?**  
+**A:** A system message defines the AI's role and behavior. For example, "You are a helpful customer support AI" tells the model to act as customer support rather than a general assistant. It controls the AI's personality and constraints.
+
+### **Intermediate Level Questions**
+
+**Q4: Explain the difference between a prompt and a pipeline.**  
+**A:** A prompt is a single interaction with an LLM. A pipeline is multiple prompts chained together, where each step's output becomes input for the next. Pipelines allow decomposition of complex tasks into simpler, more controllable steps.
+
+**Q5: What are guardrails in AI systems?**  
+**A:** Guardrails are explicit constraints and rules you add to prompts to control AI behavior. Examples: "Keep responses under 100 words," "Only answer using provided information," "Be polite but direct." They prevent unwanted behavior and ensure consistency.
+
+**Q6: Why would you use multiple prompts instead of one complex prompt?**  
+**A:** Decomposition allows better control, easier debugging, and more predictable results. Each prompt can focus on one specific task, making the overall system more reliable and maintainable.
+
+### **Advanced Level Questions**
+
+**Q7: How do you decide between different AI system levels for a project?**  
+**A:** Start with the simplest level that meets requirements. Use Level 1 for basic Q&A, Level 2 when you need external knowledge, Level 3 when AI needs to take actions, Level 4 for complex multi-step processes. Consider cost, complexity, and reliability.
+
+**Q8: How would you design a prompt refinement loop?**  
+**A:** Create a loop that: 1) Gets initial AI response, 2) Evaluates quality against criteria, 3) If below threshold, generates a new prompt asking AI to improve the response, 4) Repeats until quality is acceptable or max iterations reached. Include stopping conditions to prevent infinite loops.
+
+---
+
+## 🔬 Additional Theory & Real-Time Examples
+
+### **Theory: The Economics of Prompt Engineering**
+
+**Cost Factors:**
+- **Token Usage:** More detailed prompts = more tokens = higher cost
+- **API Calls:** Pipelines = multiple calls = higher cost
+- **Quality Trade-off:** Better prompts reduce hallucinations but increase cost
+
+**Real-time Example:** A simple prompt costs $0.002, but a refined pipeline with validation might cost $0.01. The better quality often justifies the cost.
+
+### **Theory: Prompt Composition Patterns**
+
+**Pattern 1: Role + Task + Context + Constraints + Format**
+```
+You are a [ROLE].
+[TASK DESCRIPTION]
+Using this context: [CONTEXT]
+Constraints: [CONSTRAINTS]
+Format: [OUTPUT FORMAT]
+```
+
+**Pattern 2: Chain of Thought**
+```
+Think step by step:
+1. Analyze the problem
+2. Consider different approaches
+3. Choose the best solution
+4. Explain your reasoning
+```
+
+**Real-time Example:** Instead of "Fix this code," use "You are a senior developer. Review this code for bugs. Explain each issue and provide fixed version. Format as: Issue + Fix + Explanation."
+
+### **Real-Time Example: Multi-turn Conversation Design**
+
+**Bad Approach:**
+```
+User: Tell me about AI
+AI: AI is artificial intelligence...
+User: How does it work?
+AI: It uses algorithms...
+```
+
+**Good Approach (with conversation history):**
+```
+System: You are an AI tutor
+User: Tell me about AI
+AI: AI is artificial intelligence... [stores context]
+User: How does it work?
+AI: As I mentioned, AI uses algorithms... [references previous response]
+```
+
+**Business Impact:** Better user experience, more coherent conversations, higher engagement.
+
+### **Real-Time Example: Error Handling in Pipelines**
+
+**Scenario:** AI fails to generate valid JSON in a pipeline
+
+**Bad:** Crash the system
+**Good:** 
+```python
+try:
+    result = parse_json(ai_response)
+except JSONDecodeError:
+    # Retry with clearer instructions
+    result = call_ai_with_better_prompt()
+    if still_fails:
+        return fallback_response()
+```
+
+**Production Lesson:** Always plan for AI failures—they will happen!
+
+### **Theory: The Psychology of Prompt Design**
+
+**Human Factors:**
+- **Clarity:** Unclear prompts lead to unclear responses
+- **Specificity:** Vague requests get vague answers
+- **Context:** AI needs enough information to respond well
+- **Constraints:** Without limits, AI can be too verbose or off-topic
+
+**Real-time Example:** "Write a summary" → vague, could be 1 sentence or 1 page. "Write a 3-5 sentence summary highlighting key benefits" → specific, predictable output.
+
+---
+
 ## 🚀 What You Can Now Do
 
 ✅ Write prompts that are actually programs  

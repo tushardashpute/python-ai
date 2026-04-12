@@ -130,7 +130,102 @@ What you'll build = Your system + an LLM model
 **Companies don't compete on models—they compete on systems!**
 
 ---
+## 🎯 Interview Questions & Answers
 
+### **Beginner Level Questions**
+
+**Q1: What is a token in the context of LLMs?**  
+**A:** A token is the basic unit that LLMs process. It's not necessarily a word—could be a word, part of a word, or punctuation. For example, "Artificial Intelligence" might be tokenized as ["Artifical", "Intelligence"] (2 tokens) or ["Arti", "fical", "Intell", "igence"] (4 tokens). Tokens are important because they determine API costs and context limits.
+
+**Q2: How does an LLM generate text?**  
+**A:** LLMs use next-token prediction. Given an input sequence, they predict the most likely next token based on patterns learned during training. This is repeated token by token to generate longer text. It's probabilistic, not deterministic.
+
+**Q3: What's the difference between a model and a system?**  
+**A:** A model (like GPT) is just the AI engine that predicts tokens. A system includes the model plus all the surrounding infrastructure: prompts, validation, memory management, retrieval, and user interface. Companies build systems around models to create valuable products.
+
+### **Intermediate Level Questions**
+
+**Q4: Explain the attention mechanism in simple terms.**  
+**A:** Attention helps the model focus on relevant parts of the input when making predictions. For example, in "I went to the bank to deposit money," when predicting after "bank," attention gives higher weight to "money" (financial context) and lower weight to potential river-related words. It allows the model to understand context and relationships between words.
+
+**Q5: Why do LLMs hallucinate?**  
+**A:** Hallucination occurs because LLMs generate text based on statistical patterns, not factual knowledge. They predict what seems likely based on training data, but don't verify truth or have real-time access to information. This is a fundamental limitation of the technology.
+
+**Q6: What is a context window and why does it matter?**  
+**A:** A context window is the maximum number of tokens an LLM can process at once. For example, GPT-3.5 has a 4k token limit. When exceeded, older tokens are dropped. This matters for cost (more tokens = higher cost), performance, and memory management in production systems.
+
+### **Advanced Level Questions**
+
+**Q7: How would you explain transformer architecture to a non-technical person?**  
+**A:** Think of transformers as super-smart pattern recognizers. They use attention to understand relationships between words (like knowing "bank" means money, not river, based on context) and can process multiple parts of text simultaneously. This makes them much better than older AI models that had to process text one word at a time.
+
+**Q8: If you were building an AI system, would you focus on improving the model or the system?**  
+**A:** I'd focus on the system. The model is just one component—most value comes from the surrounding infrastructure: better prompts, validation, retrieval systems, user experience, and error handling. Most companies don't build their own models; they build systems around existing models.
+
+---
+
+## 🔬 Additional Theory & Real-Time Examples
+
+### **Theory: Why Transformers Revolutionized AI**
+
+**Before Transformers (2017):**
+- Models processed text sequentially (one word at a time)
+- Limited context understanding
+- Slow and expensive to train
+
+**After Transformers:**
+- Parallel processing of entire sequences
+- Attention mechanism for better context
+- Massive scale (billions of parameters)
+- Foundation for all modern LLMs
+
+**Real-time Example:** Google Translate before transformers was often inaccurate for complex sentences. Now it handles idioms, context, and nuance much better.
+
+### **Theory: Statistical vs True Understanding**
+
+**Statistical Understanding:**
+```
+LLM: "Paris is the capital of France"
+Why? Because this pattern appears frequently in training data
+Not because it "knows" geography
+```
+
+**True Understanding (Human):**
+```
+Human: "Paris is the capital of France"
+Why? Because I learned this fact and can verify it
+```
+
+**Implication:** LLMs are excellent at pattern matching but poor at verification. This is why we need RAG systems.
+
+### **Real-Time Example: Temperature Parameter**
+
+**Low Temperature (0.1):** Predictable, conservative responses
+```
+Input: "The weather is"
+Output: "nice today" (most likely completion)
+```
+
+**High Temperature (0.9):** Creative, varied responses
+```
+Input: "The weather is"
+Output: "dancing with rainbows" (less likely but more creative)
+```
+
+**Use Case:** Low temperature for factual Q&A, high temperature for creative writing.
+
+### **Real-Time Example: Tokenization Impact**
+
+**Same sentence, different tokenization:**
+```
+English: "I love programming" → 3 tokens
+German: "Ich liebe Programmieren" → 3 tokens  
+Japanese: "プログラミングが好きです" → 8 tokens (more expensive!)
+```
+
+**Business Impact:** Multilingual applications need to consider token costs per language.
+
+---
 ## 🔬 Key Takeaways
 
 | Concept | Key Point |

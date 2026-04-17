@@ -1,0 +1,72 @@
+TOOLS 
+
+RAG Helps AI know but Agents help AI DO things. 
+
+AI Workflow - is a Structured sequence of steps where you pre-define exactly what happens and in what order. The AI is simply a "component" inside our code. 
+
+Structure: Linear or branched (if-this-then-that)
+Control: High. we now exactly what the code will do becoz we write the logic.
+Predictability: High. Everytime for same input - it shoud follow the SAME PATH.
+Eg: A system that takes a PDF, chunks it, sends it to LLM to summarize, and then saaves it to DB.
+
+Workflows are for predictable.  high-volume tasks, generally - this indirectly means you cannot "AFFORD" to make "creative" mistakes(like processing a payroll or a legal document)
+
+AI AGents: Intern 
+
+Structure - : Interactive (Plan -> Act -> Observe -> Repeat)
+Control: Lower. Here the AI "decides" its own path based on the situation.
+Predictability: Lower. it mighjt take diff steps to reach the goal than what we have decided.
+
+
+Agents are ambiguous, dynamic tasks, PATH Can change.
+
+AGENT IS LLM iside a controlled descision loop.
+
+LLM connected to other tools.
+
+
+ACT - is the key.
+Agents give  AI "hands".
+
+USer -> Choose TOOLS -> run tool -> update state -> final answer
+
+An Agent is a controlled loop 
+
+goal
+state
+tools
+Policy/rules  - what is allowed to be done. 
+Planner - m imp 
+How it decides to take the next step - as to what should happen?
+Excecution - incl validation. 
+Finalizer 
+
+LLM is the "planner" in the agent.
+
+prod desc - no glare
+this coudl possibly have glare since it is glossy, look for matte finish. For matte finish look at the below egs.
+
+userRequest- > Planner LLM -> Choose Tool 1 -> Run Tool 1 -> update state -> Chhose Tool 2 -> Run tool 2 -> Synthesize Resuts -> final answer 
+
+agent is not just "answering" - that would be a simple chat bot. 
+AI agents decisions are derived by more frequently using the underlying llm. Rufus 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

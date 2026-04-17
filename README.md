@@ -28,7 +28,15 @@ Week 3: AUGMENTING AI WITH KNOWLEDGE
 ├─ Day 1: RAG foundations
 └─ Day 2: Embeddings & semantic search
 
-By Week 3 End: Production-ready AI systems!
+Week 4: ORCHESTRATING AI ACTIONS
+├─ Day 1: Workflows (controlled sequences)
+└─ Day 2: Agents (autonomous decision-making)
+
+Week 5-6: Advanced Applications
+├─ Multi-system orchestration
+└─ Production deployment patterns
+
+By Week 4 End: Enterprise-grade AI systems!
 ```
 
 ---
@@ -164,6 +172,26 @@ By Week 3 End: Production-ready AI systems!
 
 ---
 
+### **WEEK 4: ORCHESTRATING ACTIONS**
+**Goal:** Move from "AI answers questions" to "AI executes processes"
+
+#### Day 1: AI Workflows
+[📖 Read Day 1 README](./Week4_cls1/README.md)
+
+**What you'll learn:**
+- From RAG to Workflows: The paradigm shift
+- Structured sequences vs dynamic decisions
+- When workflows are your answer
+- Workflow patterns: Plan, Execute, Validate
+- Building high-volume, predictable systems
+- State management in workflows
+
+**Key phrase:** *"You control the path; AI makes decisions within it"*
+
+**Duration:** 2 hours | **Effort:** System orchestration
+
+---
+
 ## 🔄 How the Course Builds
 
 Each week builds on the previous. Here's how pieces connect:
@@ -181,20 +209,23 @@ Week 3 Class 1: "What knowledge do I give it?"
          ↓
 Week 3 Class 2: "How do I find that knowledge?"
          ↓
-RESULT: Production AI Systems Architecture
+Week 4 Class 1: "How do I make AI DO things?"
+         ↓
+RESULT: Enterprise-Grade AI Systems Architecture
 ```
 
 ---
 
 ## 📊 The Evolution
 
-| Aspect | Week 1 | Week 2 | Week 3 |
-|--------|--------|--------|--------|
-| **Output** | Unstructured | Structured JSON | Grounded in knowledge |
-| **Approach** | Single prompts | Pipelines | Retrieval + pipelines |
-| **Knowledge** | Model parameters | Prompt text | External documents |
-| **Hallucination** | Expected | Managed | Prevented |
-| **System maturity** | Foundation | Intermediate | Production |
+| Aspect | Week 1 | Week 2 | Week 3 | Week 4 |
+|--------|--------|--------|--------|--------|
+| **Output** | Unstructured | Structured JSON | Grounded in knowledge | Executed actions |
+| **Approach** | Single prompts | Pipelines | Retrieval + pipelines | Orchestrated workflows |
+| **Knowledge** | Model parameters | Prompt text | External documents | System state |
+| **AI Role** | Answering | Deciding format | Retrieving | Orchestrating |
+| **Hallucination** | Expected | Managed | Prevented | Irrelevant |
+| **System maturity** | Foundation | Intermediate | Production | Enterprise |
 
 ---
 
@@ -240,6 +271,13 @@ RESULT: Production AI Systems Architecture
 - [ ] Implement semantic search
 - [ ] Design a vector database strategy
 - [ ] **Combine everything into production AI!**
+
+### By End of Week 4
+- [ ] Design and build AI workflows
+- [ ] Understand workflows vs agents
+- [ ] Implement Plan-Execute-Validate pattern
+- [ ] Build high-volume processing systems
+- [ ] **Create enterprise-grade systems!**
 
 ---
 
@@ -536,6 +574,7 @@ You're learning something that took professionals months to figure out, compress
 | **1** | Understanding | [LLMs](./Week1_cls1/README.md) | [Systems](./Week1_cls2/README.md) | [Week 1](./Week1_cls1/WEEK1_README.md) |
 | **2** | Controlling | [JSON](./Week2_cls1/README.md) | [Pipelines](./Week2_cls2/README.md) | [Week 2](./Week2_cls1/WEEK2_README.md) |
 | **3** | Knowledge | [RAG](./Week3_cls1/README.md) | [Embeddings](./Week3_cls2/README.md) | [Week 3](./Week3_cls1/WEEK3_README.md) |
+| **4** | Orchestration | [Workflows](./Week4_cls1/README.md) | [Agents](./Week4_cls2/README.md) | [Week 4](./Week4_cls1/README.md) |
 
 ---
 

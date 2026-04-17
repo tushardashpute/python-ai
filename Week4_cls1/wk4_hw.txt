@@ -1,0 +1,28 @@
+Week 4 Class 1 Assignment
+
+Upgrade your assistant from:
+	•	semantic retrieval assistant
+
+to:
+	•	planner + tool-using assistant
+
+Level 1
+
+Add 2–3 tools
+
+Level 2
+
+Use the LLM to choose the tool in JSON
+
+Level 3
+
+Run a multi-step agent loop
+
+Level 4
+
+Return:
+	•	steps taken
+	•	tools used
+	•	final answer
+	•	final state
+

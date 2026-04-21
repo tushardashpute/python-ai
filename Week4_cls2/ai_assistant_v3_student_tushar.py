@@ -130,22 +130,21 @@ def rag_answer(question,vector_store,k=3):
     context = "\n\n".join([item['text'] for item in top_chunks])
 
     prompt = f"""Use ONLY the context below to answer the question.
-If answer is not in context, say "I dont know"
+    If answer is not in context, say "I dont know"
 
-Context:
-{context}
+    Context:
+    {context}
 
-Question:
-{question}
-"""
+    Question:
+    {question}
+    """
     response = client.chat.completions.create(
     model = "gpt-4o-mini",
     messages=[
         {"role": "user", "content": prompt}
     ],
     temperature=0.0
-)
-    
+    )
     return response.choices[0].message.content , top_chunks
 
 def refine_to_structured_json(raw_answer, topic, temp):
@@ -189,43 +188,47 @@ def clean_output(output):
         output=output[:end_index].strip()
 
     return output
- 
-# Step 1: User Input
-topic, temp = get_user_inputs()
-    
-# Step 2: Ingest Data     
-print("Loading PDF.....")
-pdf_text = load_pdf_text(PDF_PATH)
 
-print("\n Chunking Text....")
-chunks = chunk_text(pdf_text, chunk_size=500)
-print(f"Total chunks created: {len(chunks)}")
+def main():
+    # Step 1: User Input
+    topic, temp = get_user_inputs()
+        
+    # Step 2: Ingest Data     
+    print("Loading PDF.....")
+    pdf_text = load_pdf_text(PDF_PATH)
 
-print("\n Building the vector store .........")
-vector_store = build_vector_store(chunks)
+    print("\n Chunking Text....")
+    chunks = chunk_text(pdf_text, chunk_size=500)
+    print(f"Total chunks created: {len(chunks)}")
 
-# Step 3: Retrieval & Generation
-print(f"\nPerforming RAG for: {topic}...")
-raw_answer, sources = rag_answer(topic, vector_store)
+    print("\n Building the vector store .........")
+    vector_store = build_vector_store(chunks)
 
-if "I dont know" in raw_answer:
-    print("\nResult: The knowledge base does not contain information on this topic.")
-else:
-    # Step 4: Refinement
-    try:
-        print("Refining answer into structured JSON...")
-        refined_json_str = refine_to_structured_json(raw_answer, topic, temp)
-        cleaned_data = clean_output(refined_json_str)
-        json_data = json.loads(cleaned_data)
-        print(json.dumps(json_data, indent=4))
-        print("\nSource Attribution:")
-        for s in sources:
-            print(f"- Chunk {s['chunk_id']} | Similarity: {s['score']:.4f}")
-    except json.JSONDecodeError:
-        print("Invalid Json")
+    # Step 3: Retrieval & Generation
+    print(f"\nPerforming RAG for: {topic}...")
+    raw_answer, sources = rag_answer(topic, vector_store)
 
-# print("\nSource chunks used ")
-# for s in sources:
-#     print(f"ChunkID:{s['chunk_id']} | Score : {s['score']} ")
-#     print(s['text'][:300])
+    if "I dont know" in raw_answer:
+        print("\nResult: The knowledge base does not contain information on this topic.")
+    else:
+        # Step 4: Refinement
+        try:
+            print("Refining answer into structured JSON...")
+            refined_json_str = refine_to_structured_json(raw_answer, topic, temp)
+            cleaned_data = clean_output(refined_json_str)
+            json_data = json.loads(cleaned_data)
+            print(json.dumps(json_data, indent=4))
+            print("\nSource Attribution:")
+            for s in sources:
+                print(f"- Chunk {s['chunk_id']} | Similarity: {s['score']:.4f}")
+        except json.JSONDecodeError:
+            print("Invalid Json")
+
+    # print("\nSource chunks used ")
+    # for s in sources:
+    #     print(f"ChunkID:{s['chunk_id']} | Score : {s['score']} ")
+    #     print(s['text'][:300])
+
+if __name__ == "__main__":
+    main()
 

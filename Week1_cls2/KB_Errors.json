@@ -1,0 +1,103 @@
+{
+  "pod oom": {
+    "error_name": "Pod Out Of Memory (OOM)",
+    "description": "Pod is killed when it exceeds memory limits",
+    "resolution": "Increase memory limits in pod spec or optimize application to use less memory",
+    "commands": [
+      "kubectl get pods -o jsonpath='{.items[*].status.containerStatuses[*].lastState.terminated.reason}'",
+      "kubectl describe pod <pod-name>",
+      "kubectl set resources deployment <name> --limits=memory=512Mi"
+    ]
+  },
+  "crashloopbackoff": {
+    "error_name": "CrashLoopBackOff",
+    "description": "Container crashes and Kubernetes keeps restarting it",
+    "resolution": "Check application logs for errors, fix the code/config, or increase startup time with initialDelaySeconds",
+    "commands": [
+      "kubectl logs <pod-name>",
+      "kubectl logs <pod-name> --previous",
+      "kubectl describe pod <pod-name>"
+    ]
+  },
+  "imagepullbackoff": {
+    "error_name": "ImagePullBackOff",
+    "description": "Kubernetes cannot pull the container image from registry",
+    "resolution": "Verify image name, tag, registry credentials, or ensure registry is accessible",
+    "commands": [
+      "kubectl describe pod <pod-name>",
+      "kubectl create secret docker-registry <secret-name> --docker-server=<registry>",
+      "kubectl set serviceaccount deployment <name> <service-account>"
+    ]
+  },
+  "pending": {
+    "error_name": "Pod Stuck in Pending",
+    "description": "Pod cannot be scheduled on any node",
+    "resolution": "Check node resources, labels/selectors, PVC availability, or resource requests",
+    "commands": [
+      "kubectl describe pod <pod-name>",
+      "kubectl top nodes",
+      "kubectl get events --sort-by='.lastTimestamp'"
+    ]
+  },
+  "init:0": {
+    "error_name": "Init:0 Container Status",
+    "description": "Init container failed during startup sequence",
+    "resolution": "Check init container logs to identify the failure, fix configuration, or dependencies",
+    "commands": [
+      "kubectl logs <pod-name> -c <init-container-name>",
+      "kubectl describe pod <pod-name> | grep Init",
+      "kubectl logs <pod-name> --previous"
+    ]
+  },
+  "evicted": {
+    "error_name": "Pod Evicted",
+    "description": "Pod is forcibly removed due to node resource pressure",
+    "resolution": "Increase node resources, optimize pod resource usage, or add more nodes",
+    "commands": [
+      "kubectl describe pod <pod-name> | grep Reason",
+      "kubectl get events",
+      "kubectl top pod <pod-name>"
+    ]
+  },
+  "backoff": {
+    "error_name": "Back-off Restarting Failed Container",
+    "description": "Container fails repeatedly and Kubernetes increases wait time between restarts",
+    "resolution": "Check application logs, fix startup issues, or increase startupProbe initialDelaySeconds",
+    "commands": [
+      "kubectl logs <pod-name>",
+      "kubectl logs <pod-name> --tail=50",
+      "kubectl describe pod <pod-name>"
+    ]
+  },
+  "error": {
+    "error_name": "Container in Error State",
+    "description": "Generic container error - application exited with non-zero status",
+    "resolution": "Review application logs, check exit code, verify environment variables and configuration",
+    "commands": [
+      "kubectl logs <pod-name>",
+      "kubectl describe pod <pod-name>",
+      "kubectl exec -it <pod-name> -- /bin/sh"
+    ]
+  },
+  "cpu throttle": {
+    "error_name": "CPU Throttling",
+    "description": "Pod CPU usage exceeds limits and is being throttled",
+    "resolution": "Increase CPU limits or optimize application performance",
+    "commands": [
+      "kubectl top pod <pod-name>",
+      "kubectl set resources deployment <name> --limits=cpu=1000m",
+      "kubectl describe pod <pod-name>"
+    ]
+  },
+  "connection refused": {
+    "error_name": "Connection Refused",
+    "description": "Application cannot connect to service or external resource",
+    "resolution": "Verify service exists, DNS resolution works, firewall rules, or network policies",
+    "commands": [
+      "kubectl get svc",
+      "kubectl get networkpolicies",
+      "kubectl exec -it <pod-name> -- nslookup <service-name>",
+      "kubectl logs <pod-name>"
+    ]
+  }
+}

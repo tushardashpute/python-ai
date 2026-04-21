@@ -1,0 +1,194 @@
+================================================================================
+ERROR RESOLUTION KNOWLEDGE BASE
+================================================================================
+
+Generated: April 21, 2026 at 08:24
+Total Errors: 10
+Version: 1.0
+
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Pod Out Of Memory (OOM)
+2. CrashLoopBackOff
+3. ImagePullBackOff
+4. Pod Stuck in Pending
+5. Init:0 Container Status
+6. Pod Evicted
+7. Back-off Restarting Failed Container
+8. Container in Error State
+9. CPU Throttling
+10. Connection Refused
+
+================================================================================
+
+ERROR #1: Pod Out Of Memory (OOM)
+--------------------------------------------------------------------------------
+Error Key: pod oom
+
+DESCRIPTION:
+Pod is killed when it exceeds memory limits
+
+RESOLUTION:
+Increase memory limits in pod spec or optimize application to use less memory
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl get pods -o jsonpath='{.items[*].status.containerStatuses[*].lastState.terminated.reason}'
+  Step 2: kubectl describe pod <pod-name>
+  Step 3: kubectl set resources deployment <name> --limits=memory=512Mi
+
+================================================================================
+
+ERROR #2: CrashLoopBackOff
+--------------------------------------------------------------------------------
+Error Key: crashloopbackoff
+
+DESCRIPTION:
+Container crashes and Kubernetes keeps restarting it
+
+RESOLUTION:
+Check application logs for errors, fix the code/config, or increase startup time with initialDelaySeconds
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl logs <pod-name>
+  Step 2: kubectl logs <pod-name> --previous
+  Step 3: kubectl describe pod <pod-name>
+
+================================================================================
+
+ERROR #3: ImagePullBackOff
+--------------------------------------------------------------------------------
+Error Key: imagepullbackoff
+
+DESCRIPTION:
+Kubernetes cannot pull the container image from registry
+
+RESOLUTION:
+Verify image name, tag, registry credentials, or ensure registry is accessible
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl describe pod <pod-name>
+  Step 2: kubectl create secret docker-registry <secret-name> --docker-server=<registry>
+  Step 3: kubectl set serviceaccount deployment <name> <service-account>
+
+================================================================================
+
+ERROR #4: Pod Stuck in Pending
+--------------------------------------------------------------------------------
+Error Key: pending
+
+DESCRIPTION:
+Pod cannot be scheduled on any node
+
+RESOLUTION:
+Check node resources, labels/selectors, PVC availability, or resource requests
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl describe pod <pod-name>
+  Step 2: kubectl top nodes
+  Step 3: kubectl get events --sort-by='.lastTimestamp'
+
+================================================================================
+
+ERROR #5: Init:0 Container Status
+--------------------------------------------------------------------------------
+Error Key: init:0
+
+DESCRIPTION:
+Init container failed during startup sequence
+
+RESOLUTION:
+Check init container logs to identify the failure, fix configuration, or dependencies
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl logs <pod-name> -c <init-container-name>
+  Step 2: kubectl describe pod <pod-name> | grep Init
+  Step 3: kubectl logs <pod-name> --previous
+
+================================================================================
+
+ERROR #6: Pod Evicted
+--------------------------------------------------------------------------------
+Error Key: evicted
+
+DESCRIPTION:
+Pod is forcibly removed due to node resource pressure
+
+RESOLUTION:
+Increase node resources, optimize pod resource usage, or add more nodes
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl describe pod <pod-name> | grep Reason
+  Step 2: kubectl get events
+  Step 3: kubectl top pod <pod-name>
+
+================================================================================
+
+ERROR #7: Back-off Restarting Failed Container
+--------------------------------------------------------------------------------
+Error Key: backoff
+
+DESCRIPTION:
+Container fails repeatedly and Kubernetes increases wait time between restarts
+
+RESOLUTION:
+Check application logs, fix startup issues, or increase startupProbe initialDelaySeconds
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl logs <pod-name>
+  Step 2: kubectl logs <pod-name> --tail=50
+  Step 3: kubectl describe pod <pod-name>
+
+================================================================================
+
+ERROR #8: Container in Error State
+--------------------------------------------------------------------------------
+Error Key: error
+
+DESCRIPTION:
+Generic container error - application exited with non-zero status
+
+RESOLUTION:
+Review application logs, check exit code, verify environment variables and configuration
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl logs <pod-name>
+  Step 2: kubectl describe pod <pod-name>
+  Step 3: kubectl exec -it <pod-name> -- /bin/sh
+
+================================================================================
+
+ERROR #9: CPU Throttling
+--------------------------------------------------------------------------------
+Error Key: cpu throttle
+
+DESCRIPTION:
+Pod CPU usage exceeds limits and is being throttled
+
+RESOLUTION:
+Increase CPU limits or optimize application performance
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl top pod <pod-name>
+  Step 2: kubectl set resources deployment <name> --limits=cpu=1000m
+  Step 3: kubectl describe pod <pod-name>
+
+================================================================================
+
+ERROR #10: Connection Refused
+--------------------------------------------------------------------------------
+Error Key: connection refused
+
+DESCRIPTION:
+Application cannot connect to service or external resource
+
+RESOLUTION:
+Verify service exists, DNS resolution works, firewall rules, or network policies
+
+DEBUGGING COMMANDS:
+  Step 1: kubectl get svc
+  Step 2: kubectl get networkpolicies
+  Step 3: kubectl exec -it <pod-name> -- nslookup <service-name>
+  Step 4: kubectl logs <pod-name>
+
+================================================================================
+

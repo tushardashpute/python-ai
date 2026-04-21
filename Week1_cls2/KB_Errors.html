@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Resolution Knowledge Base</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .metadata {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        .toc {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .toc h2 { margin-bottom: 15px; }
+        .toc ol { margin-left: 20px; }
+        .toc li { margin-bottom: 8px; }
+        .error-section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        .error-header {
+            background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .error-header h2 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        .error-key {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .section-title {
+            color: #1976d2;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            border-left: 4px solid #1976d2;
+            padding-left: 10px;
+        }
+        .description, .resolution {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 3px;
+            margin-bottom: 12px;
+            border-left: 3px solid #1976d2;
+        }
+        .commands {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 3px;
+            margin-bottom: 12px;
+        }
+        .command-item {
+            background: white;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-left: 3px solid #4CAF50;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            word-break: break-all;
+        }
+        .command-num {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            color: #999;
+            font-size: 0.9em;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 0; }
+            .error-section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Error Resolution Knowledge Base</h1>
+        <div class="metadata">
+            <p><strong>Generated:</strong> April 21, 2026 at 08:24</p>
+            <p><strong>Total Errors:</strong> 10</p>
+            <p><strong>Version:</strong> 1.0</p>
+        </div>
+        
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li>Pod Out Of Memory (OOM)</li>
+                <li>CrashLoopBackOff</li>
+                <li>ImagePullBackOff</li>
+                <li>Pod Stuck in Pending</li>
+                <li>Init:0 Container Status</li>
+                <li>Pod Evicted</li>
+                <li>Back-off Restarting Failed Container</li>
+                <li>Container in Error State</li>
+                <li>CPU Throttling</li>
+                <li>Connection Refused</li>
+            </ol>
+        </div>
+        
+        <div class="errors">
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#1 Pod Out Of Memory (OOM)</h2>
+                <div class="error-key">Error Key: <code>pod oom</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Pod is killed when it exceeds memory limits
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Increase memory limits in pod spec or optimize application to use less memory
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl get pods -o jsonpath='{.items[*].status.containerStatuses[*].lastState.terminated.reason}'</div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl describe pod <pod-name></div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl set resources deployment <name> --limits=memory=512Mi</div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#2 CrashLoopBackOff</h2>
+                <div class="error-key">Error Key: <code>crashloopbackoff</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Container crashes and Kubernetes keeps restarting it
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Check application logs for errors, fix the code/config, or increase startup time with initialDelaySeconds
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl logs <pod-name></div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl logs <pod-name> --previous</div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl describe pod <pod-name></div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#3 ImagePullBackOff</h2>
+                <div class="error-key">Error Key: <code>imagepullbackoff</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Kubernetes cannot pull the container image from registry
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Verify image name, tag, registry credentials, or ensure registry is accessible
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl describe pod <pod-name></div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl create secret docker-registry <secret-name> --docker-server=<registry></div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl set serviceaccount deployment <name> <service-account></div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#4 Pod Stuck in Pending</h2>
+                <div class="error-key">Error Key: <code>pending</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Pod cannot be scheduled on any node
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Check node resources, labels/selectors, PVC availability, or resource requests
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl describe pod <pod-name></div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl top nodes</div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl get events --sort-by='.lastTimestamp'</div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#5 Init:0 Container Status</h2>
+                <div class="error-key">Error Key: <code>init:0</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Init container failed during startup sequence
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Check init container logs to identify the failure, fix configuration, or dependencies
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl logs <pod-name> -c <init-container-name></div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl describe pod <pod-name> | grep Init</div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl logs <pod-name> --previous</div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#6 Pod Evicted</h2>
+                <div class="error-key">Error Key: <code>evicted</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Pod is forcibly removed due to node resource pressure
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Increase node resources, optimize pod resource usage, or add more nodes
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl describe pod <pod-name> | grep Reason</div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl get events</div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl top pod <pod-name></div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#7 Back-off Restarting Failed Container</h2>
+                <div class="error-key">Error Key: <code>backoff</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Container fails repeatedly and Kubernetes increases wait time between restarts
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Check application logs, fix startup issues, or increase startupProbe initialDelaySeconds
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl logs <pod-name></div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl logs <pod-name> --tail=50</div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl describe pod <pod-name></div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#8 Container in Error State</h2>
+                <div class="error-key">Error Key: <code>error</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Generic container error - application exited with non-zero status
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Review application logs, check exit code, verify environment variables and configuration
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl logs <pod-name></div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl describe pod <pod-name></div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl exec -it <pod-name> -- /bin/sh</div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#9 CPU Throttling</h2>
+                <div class="error-key">Error Key: <code>cpu throttle</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Pod CPU usage exceeds limits and is being throttled
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Increase CPU limits or optimize application performance
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl top pod <pod-name></div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl set resources deployment <name> --limits=cpu=1000m</div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl describe pod <pod-name></div>
+            </div>
+        </div>
+
+        <div class="error-section">
+            <div class="error-header">
+                <h2>#10 Connection Refused</h2>
+                <div class="error-key">Error Key: <code>connection refused</code></div>
+            </div>
+            
+            <div class="section-title">Description</div>
+            <div class="description">
+                Application cannot connect to service or external resource
+            </div>
+            
+            <div class="section-title">Resolution</div>
+            <div class="resolution">
+                Verify service exists, DNS resolution works, firewall rules, or network policies
+            </div>
+            
+            <div class="section-title">Debugging Commands</div>
+            <div class="commands">
+                <div class="command-item"><span class="command-num">Step 1:</span> kubectl get svc</div>
+                <div class="command-item"><span class="command-num">Step 2:</span> kubectl get networkpolicies</div>
+                <div class="command-item"><span class="command-num">Step 3:</span> kubectl exec -it <pod-name> -- nslookup <service-name></div>
+                <div class="command-item"><span class="command-num">Step 4:</span> kubectl logs <pod-name></div>
+            </div>
+        </div>
+
+        </div>
+        
+        <footer>
+            <p>Error Resolution System v1.0 | For internal use</p>
+            <p>To save as PDF: Use your browser's Print function (Ctrl+P) and select "Save as PDF"</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+json outputs
+validation
+embeddings
+RAG
+agents
+decision flows
+
+but these are all sep componets or arch layers
+
+now we assemble a product using these componets
+
+A company invests or buys a working system.
+
+pipeline with roles of the LLM at diff stages.
+
+
+AI-assisted resume shortlisting/candidate matching system.
+
+resumes are chunked and parsed
+embeddings are created
+semantic search
+system returns the shortlisted 
+human still reviews the final candidates
+
+
+for eg resume may have:
+- "automation framework development"
+- "backend scripting"
+- REST  or REST integration
+- test orchasteration tools 
+
+but the JD says something like
+
+Python Automation Engineer
+API automation
+test tooling
+
+
+Semantically match resumes(chunks) to a jd like above and return the top relevant (top-k) candidates.
+
+JD -> Pllaner LLM -> Pydantic -validation here -> Resume pdf -> chunking -> embeddings -> semantinc retrieval -> Top candidate (chunks) -> Decison/summary LLM -> Pydantic - validation here again -> final result 
+
+Part 1
+part 2-  building the plan schema
+
+Planner LLM extracts:
+    - role title
+    - must have skills
+    - nice-to-have skills
+    - reasoning  (v imp for our own validation)
+
+Part 3 - Resume ingestion
+    - multiple resume pdf's 
+    - extract text 
+    - chunk per resume 
+    - attach candidate metadata
+
+Part 4 - embedding and retrieval 
+
+- embed jobd descr or extract must-have skills query 
+- retreival of top chunks 
+- aggregate by candidate 
+
+m imp part here is Candidate ranking logic . our challenges:
+so my idea is this:
+- retrieve top-k chunks
+- map each chunk back to a candidate
+- agg chunk scores by candidate  (m imp piece)- LLM abs cannot do on its own. 
+- rank candidates by total or max similarity 
+
+Part 5- LLM summary layers
+
+top 3 cand then we can ask LLM to reurn this in strcutre
+{
+    "cand_name":".....",
+    "match_summary": ".....",
+    "match_skills": [.....],
+    "possible_gaps": [],
+    "recommendation": "shortlist/maybe/weakfit"
+
+}
+
+Step 6 - Pydantic validation
+    validate planner output
+    validate candidate summary output 
+    fail safely if output is wrong 
+
+
+Step 7 - final shortlisted object(candidates)
+
+
+
+
+
+
+
+
+

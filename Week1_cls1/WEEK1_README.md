@@ -96,6 +96,24 @@ Week 4: AGENTS
 
 ---
 
+## 🎚️ Prompt & Sampling Controls
+
+These settings help shape the model's behavior and output quality.
+
+| Parameter | Purpose | Typical usage |
+|-----------|---------|---------------|
+| `temperature` | Controls randomness in token selection | `0.0` for deterministic outputs, `0.7` for more creative answers |
+| `max_tokens` | Limits output length | Keep responses concise and cost-efficient |
+| `top_p` | Chooses from the smallest token set whose total probability exceeds the threshold | `0.7`–`0.9` to avoid unlikely words while retaining diversity |
+| `top_k` | Restricts sampling to the top K probable tokens | Use for a tighter candidate set when you want more control |
+
+**Practical advice:**
+- Use low `temperature` and low `top_p` for structured outputs like JSON, summaries, and code.
+- Use higher `temperature` for brainstorming or creative expression.
+- Avoid setting both `temperature` and `top_p` too high at the same time.
+
+---
+
 ## 🔍 Common Misconceptions Cleared
 
 ❌ **"AI understands language like humans"**  

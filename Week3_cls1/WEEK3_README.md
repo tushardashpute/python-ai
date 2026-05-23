@@ -313,3 +313,10 @@ When you connect all three weeks:
 
 *Last Updated: 2026*  
 *Where you build production AI systems*
+
+---
+
+## 📂 Examples
+
+- RAG demo: `rag_example.py` — toy chunking + embedding + retrieval example (in `Week3_cls1`).
+

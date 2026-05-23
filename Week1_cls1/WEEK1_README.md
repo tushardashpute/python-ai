@@ -185,6 +185,22 @@ Week1_cls2/
 
 ---
 
+## 📂 Class Materials (Week 1)
+
+- Slides: `TPAI_Week1_Class1.pdf`
+- Worksheet: `TPAI_Week1_Class1_Worksheet.pdf`
+- Notes: `wk1_class1_notes.txt`
+- Examples: `llm_learning.py`, `random_eg.py`
+- Demo script: `temperature_demo.py` (sampling & temperature demo)
+
+---
+
+## 🧪 Examples
+
+- See `llm_learning.py` for hands-on LLM examples and verification patterns.
+- Run `temperature_demo.py` to experiment with sampling temperature and observe deterministic vs creative outputs.
+
+
 ## 🎬 How to Use These Materials
 
 Each file builds on the previous. Follow this flow:

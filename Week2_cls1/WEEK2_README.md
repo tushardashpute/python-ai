@@ -271,3 +271,10 @@ Week2_cls2/
 
 *Last Updated: 2026*  
 *For developers ready to build production AI systems*
+
+---
+
+## 📂 Examples
+
+- JSON enforcement demo: `json_enforcer.py` (in `Week2_cls1`) — validates repeated model responses until valid JSON is obtained.
+

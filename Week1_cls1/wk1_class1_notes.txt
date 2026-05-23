@@ -118,30 +118,30 @@ finally before running just give
 source ~/.zshrc
 
 
-Verify uing Python 
 
-Note - goto llm_learning.py 
+Verify using Python
 
-temperature
+Note - goto llm_learning.py
 
-temperature controls randomness 
-low temp (0.0-0.2)
-    Very deterministic 
-    Possibility of getting the Same answer every time we run it is higher. 
-    Predictable 
-    Professional 
+Sampling & Temperature
 
-high temp (0.7-1.0)
-    More variation 
-    More Creative 
-    Less predictable 
-    Slightly more hallucination risk 
+`temperature` controls how much randomness the model uses when sampling from its probability distribution.
 
-Ramdon.choices - where we had weights 
+- Low temperature (0.0–0.2): very deterministic — the model tends to choose the highest-probability tokens. Use for factual, repeatable outputs.
+- Medium temperature (0.3–0.6): some variability — balances creativity and reliability.
+- High temperature (0.7–1.0): more diverse and creative outputs but higher chance of incorrect or surprising text.
 
-temperature= How "WILD" should the probablity of the sampling be?
+Related knobs:
+- `top_k`: keep only the top K most likely tokens before sampling (reduces tail noise).
+- `top_p` (nucleus sampling): keep the smallest set of tokens whose cumulative probability ≥ p (common alternative to `top_k`).
 
-Hallucination occurs when the model predicts plausible but incorrect text.
+Practical guidance:
+- For deterministic or safety-critical outputs (JSON, summaries, code), use `temperature=0` or very low values.
+- For creative tasks (brainstorming, ideation), use `temperature=0.7` or higher.
+- Combine `temperature` with `top_p` (e.g., `top_p=0.9`) to shape randomness more predictably.
+
+Why hallucination relates: higher randomness can increase plausible-sounding but incorrect continuations. Hallucination is a statistical artifact — reduce sampling variance or add grounding (RAG, retrieval) to mitigate it.
+
 
 
 

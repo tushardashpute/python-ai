@@ -150,7 +150,49 @@ prompt = {
 
 ---
 
-### 4. **From Single Prompts to Prompt Pipelines**
+### 4. **Prompt API Controls**
+These are the most important levers for controlling model behavior and output quality.
+
+- **temperature** controls randomness.
+  - `0.0` → deterministic, safe, repeatable outputs.
+  - `0.8` → creative, more varied text.
+  - `1.0` → very creative, but higher risk of unexpected or wrong tokens.
+- **max_tokens** limits the length of the response and acts like a budget for the answer.
+- **top_p** controls the cumulative probability mass of token choices.
+  - If `top_p = 1.0`, the model may choose from all tokens.
+  - If `top_p = 0.7`, the model only selects from the smallest set of tokens whose probabilities sum to 70%.
+  - This avoids extremely unlikely words while still allowing variation.
+- **top_k** limits sampling to the top K most likely tokens.
+  - Use `top_k` when you want a fixed-size candidate set.
+  - `top_p` is often preferred because it adapts to the probability distribution.
+
+**How to use them together:**
+- Typically tune either `temperature` or `top_p` first, not both aggressively.
+- Use low temperature or low top_p for structured tasks like JSON, code, or summaries.
+- Use higher temperature for brainstorming, ideation, and creative writing.
+
+**API Controls Summary**
+
+| Parameter | What it does | Best for | Notes |
+|-----------|--------------|----------|-------|
+| `temperature` | Controls randomness in sampling | Creative or conservative tone | Use low values for deterministic output |
+| `max_tokens` | Limits response length | Output budget control | Prevents excessive or costly responses |
+| `top_p` | Select from top cumulative probability mass | Balanced variation | Avoids very unlikely tokens |
+| `top_k` | Select from top K tokens only | Fixed candidate set | Good for very controlled sampling |
+
+**Example:**
+```
+# Use top_p to avoid extremely unlikely words
+prompt = "Explain hallucination in one sentence for a software engineer."
+response = llm_call(prompt, temperature=0.2, top_p=0.8, max_tokens=50)
+```
+
+**Control levers, not just parameters:**
+These settings are part of prompt engineering — they shape how the model samples tokens and how much it can explore.
+
+---
+
+### 5. **From Single Prompts to Prompt Pipelines**
 
 The evolution:
 

@@ -24,6 +24,9 @@ Week 5 focuses on evaluation: how to measure AI outputs, add judge/critic layers
 **Key Takeaway:**
 > Treat AI outputs like software: design tests, metrics, and fail-fast gates.
 
+**Intro (for beginners):**
+Judge layers are automated checks that score or validate model outputs (like unit tests for AI). They help catch wrong or unsafe answers before they reach users.
+
 ---
 
 ### **Day 2: Responsible AI & Human Oversight**

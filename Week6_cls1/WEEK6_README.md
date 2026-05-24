@@ -20,6 +20,9 @@ Week 6 synthesizes everything: frameworks, multi-agent patterns, and deployment 
 - Integrating tools, retrieval, and function-calling in frameworks
 - Best practices for modular, testable components
 
+**Intro (for beginners):**
+Frameworks provide pre-built patterns and components (like retrieval, tool integration, and orchestration) so you can assemble systems faster and with fewer errors.
+
 ---
 
 ### **Day 2: Multi-Agent Patterns & Production**
@@ -29,6 +32,9 @@ Week 6 synthesizes everything: frameworks, multi-agent patterns, and deployment 
 - Multi-agent coordination and communication
 - Autonomy boundaries and safety in multi-agent systems
 - Deployment concerns: scaling, observability, and cost management
+
+**Intro (for beginners):**
+Multi-agent systems split work into specialized agents (retrievers, summarizers, action agents). Think of them as a small team where each agent has a clear role and communicates results.
 
 ---
 

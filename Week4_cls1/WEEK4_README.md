@@ -24,6 +24,9 @@ Week 4 shows how to make AI do things: call functions, use tools, and coordinate
 **Key Takeaway:**
 > Agents should treat tools as well-defined, validated primitives — not magic boxes.
 
+**Intro (for beginners):**
+Function calling lets models request external actions (like fetching data or running a small script). Think of the model as asking a well-defined API to perform a specific task and returning the result.
+
 ---
 
 ### **Day 2: Agentic Systems & Orchestration**
@@ -37,6 +40,9 @@ Week 4 shows how to make AI do things: call functions, use tools, and coordinate
 
 **Key Takeaway:**
 > Build agents that fail gracefully and log intent, actions and outcomes.
+
+**Intro (for beginners):**
+An agent combines planning and tools: it decides which tools to call, in what order, and how to handle failures. Agents let AI do work in the world while following rules and safety checks.
 
 ---
 

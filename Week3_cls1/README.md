@@ -266,6 +266,54 @@ Exact match only: LIMITED
 
 ---
 
+### 9.1 Semantic Search — A Beginner-Friendly Primer
+
+If you're new to AI, think of semantic search as "search by meaning" instead of "search by exact words." Instead of matching the exact words in a query, semantic search finds pieces of text that mean the same thing. For example, "refund policy" and "return policy" are treated as similar even though the words differ.
+
+Why this matters for RAG:
+- Users ask questions in many different ways — semantic search lets retrieval find the right document even when phrasing differs.
+- It reduces false positives compared to keyword matching and returns more relevant, human-like results.
+
+Simple intuition:
+- Convert text (a sentence, paragraph, or chunk) into a list of numbers called an embedding.
+- Compare embeddings for the query and each chunk using a similarity function (cosine similarity is common).
+- Return the chunks whose embeddings are most similar to the query.
+
+This is the core idea behind vector search and why vector databases are useful.
+
+### 9.2 How Embeddings Work (High-level)
+
+An embedding is a compact numerical summary of meaning. You can imagine it as a list of coordinates on a multi-dimensional map where similar meanings are close together. Embedding models learn these coordinates during training so that semantically similar phrases end up near each other.
+
+Key points for beginners:
+- Embeddings capture meaning, not exact words.
+- They are fixed-length numeric vectors you can store and compare quickly.
+- Better embeddings → better retrieval results.
+
+### 9.3 Scoring & Top-k Retrieval
+
+After computing similarity between the query embedding and chunk embeddings, we rank chunks by score. "Top-k" simply means "take the k highest scoring chunks." Typical values are k=3..10 depending on your context window and how much supporting text you want to provide to the model.
+
+Practical tips:
+- Keep `top_k` small enough to fit within your model's context window, but large enough to include diverse supporting facts (start with 3–5).
+- Use a relevance threshold in addition to top_k to avoid returning low-quality matches.
+
+### 9.4 Combining Semantic Search with Filters
+
+You can (and should) combine semantic similarity with simple filters:
+- Date ranges (only recent docs)
+- Document type (policy vs. FAQ)
+- Source trust level
+
+Filters reduce noise and improve precision while semantic search handles meaning.
+
+---
+
+**Quick starter intro for embeddings & semantic search (beginner):**
+At its simplest, semantic search turns both the user question and document chunks into numbers (embeddings) and finds which numbers are closest. This is like finding nearby points on a map: nearby points are likely to have similar meaning.
+Use semantic search when you want the model to find relevant information even when the user uses different words than the documents.
+
+
 ### 10. **Putting It All Together: A RAG System**
 
 ```python

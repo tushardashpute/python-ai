@@ -25,6 +25,9 @@ You've understood how AI works. Now learn to **control it**. Week 2 is about mak
 **Key Takeaway:**
 > JSON is a contract between your system and the AI. Clean structure ≠ Correct data, but it sets clear expectations.
 
+**Intro (for beginners):**
+Structured output means asking the model to return data in a predictable format (like JSON). This makes it easy to programmatically verify and use model responses — essential when building reliable systems.
+
 **Get Started:** [Day 1 README](../Week2_cls1/README.md)
 
 ---

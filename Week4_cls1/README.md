@@ -261,6 +261,60 @@ OUTPUT: "Invoice processed and routed to AR"
 
 ---
 
+## 🎯 Interview Questions & Answers
+
+### **Beginner Level Questions**
+
+**Q1: What's the difference between a workflow and an agent?**  
+**A:** A workflow is a pre-defined sequence of steps that YOU design. An agent is an interactive loop where the AI decides what step to take next. Workflows: "Always do A, then B, then C." Agents: "Do A, analyze result, then decide if B or C is needed."
+
+**Q2: Why would you use a workflow instead of just asking the LLM to do everything?**  
+**A:** Workflows give you control and predictability. Same input always produces the same output. You know exactly what happens at each step. Workflows are auditable (compliance requirement), testable, and reliable at scale. Workflows are for business-critical processes.
+
+**Q3: When should you use an LLM in a workflow?**  
+**A:** At decision points—when you need the AI to classify, prioritize, or interpret something. Not for deterministic steps (those should be code). Example: LLM decides "Is this invoice legitimate?" (yes → process, no → flag for review).
+
+### **Intermediate Level Questions**
+
+**Q4: How do you design a workflow before coding it?**  
+**A:** Start with a flowchart: inputs → steps → decision points → outputs. For each decision point, specify: What is the LLM deciding? What are possible outcomes? What happens for each outcome? Then code step-by-step following this diagram.
+
+**Q5: What makes a workflow production-ready?**  
+**A:** Deterministic—same input produces same output. Testable—each step can be tested independently. Validated—checks at each step ensure correctness. Logged—every decision is recorded. Observable—you can debug if something goes wrong. Recoverable—can retry failed steps.
+
+**Q6: How do you prevent a workflow from making mistakes?**  
+**A:** Three layers: (1) Input validation—check input is valid before processing. (2) Step validation—verify each step completed correctly. (3) Output validation—check final result makes sense. Use Pydantic for schema validation at each layer.
+
+### **Advanced Level Questions**
+
+**Q7: Can workflows handle conditional branching beyond simple if/else?**  
+**A:** Yes. Use switch statements, state machines, or even DAGs (directed acyclic graphs). Example: Based on document type + urgency + budget, choose from 5 different processing paths. Each path has its own sequence of steps. Coordinator decides which path to take.
+
+**Q8: How do you scale workflows to process thousands of items?**  
+**A:** Use queuing systems (message queues) to distribute work. Each workflow instance processes one item independently. Run multiple instances in parallel. Monitor throughput (items/sec). Add retry logic for failures. Track cost per item. This is called batch processing.
+
+**Q9: What's the relationship between workflows and MLOps/production deployment?**  
+**A:** Workflows ARE your production code. They embed LLMs into larger systems. Good MLOps practice: version your workflows, A/B test different paths, monitor each path's performance, rollback if new version fails. Treat workflows like you treat web services—carefully.
+
+---
+
+## 📊 Workflow vs Agent Decision Matrix
+
+Use this to decide what to build:
+
+| Question | Use Workflow | Use Agent |
+|----------|------------|---------|
+| "Can I describe the exact steps?" | ✅ Yes → Workflow | ❌ Not really → Agent |
+| "Does the path depend on results?" | ⚠️ Maybe (branch) | ✅ Often (dynamic) |
+| "Is this for production?" | ✅ Yes | ⚠️ Mostly yes |
+| "Can I predict the path?" | ✅ Yes | ❌ No |
+| "Do I need audit compliance?" | ✅ Yes | ⚠️ Possible |
+| "Is this learning/exploration?" | ❌ No | ✅ Yes |
+| "Speed critical?" | ✅ Yes (optimized) | ⚠️ Slower |
+| "High stakes decision?" | ✅ Workflow (controlled) | ❌ Risky |
+
+---
+
 ## 💡 Remember
 
 **Workflows are the practical workhorse of production AI.** While agents get the attention, workflows run most real AI systems. Master workflows first—they're simpler, more predictable, and most importantly, they **actually work** at scale.

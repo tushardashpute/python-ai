@@ -1,8 +1,13 @@
+import sys
 from pathlib import Path
 
 import numpy as np
 from openai import OpenAI
 from pypdf import PdfReader
+
+# Ensure stdout can print Unicode characters on Windows
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BASE_DIR = Path(__file__).resolve().parent
 PDF_PATH = BASE_DIR / "TPAI_Week3_Class1.pdf"
@@ -100,14 +105,16 @@ Context:
 Question:
 {question}
 
-If the answer is not in the context, say \"I don't know.\"
-""".strip()
+If answer is not in context, say "I dont know"
+"""
 
 
 def rag_answer(question: str, vector_store: list[dict], k: int = 3) -> tuple[str, list[dict]]:
     """Run the full RAG answer flow: retrieve + augment + generate."""
     top_chunks = semantic_search(question, vector_store, k=k)
+
     prompt = build_rag_prompt(question, top_chunks)
+    print(prompt)
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -137,12 +144,13 @@ if __name__ == "__main__":
     print("\nTop matching chunks:")
     for result in results:
         print(f"ChunkID: {result['chunk_id']} | Score: {result['score']:.4f}")
-        print(result["text"][:300])
+        print(result["text"][:500])
         print("---")
 
-    question = "What is the RAG Pipeline?"
+    # question = "What is the RAG Pipeline?"
+    question = "What is RAG Pipeline?"
     print(f"\nRAG question: {question}")
-    answer, sources = rag_answer(question, vector_store, k=3)
+    answer, sources = rag_answer(question, vector_store, k=5)
 
     print("\nFinal Answer:")
     print(answer)

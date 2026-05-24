@@ -142,6 +142,7 @@ Question:
 
 If answer is not in context, say "I dont know"
 """
+    print(prompt)
     response = client.chat.completions.create(
     model = "gpt-4o-mini",
     messages=[
